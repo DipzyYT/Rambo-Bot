@@ -1,9 +1,12 @@
-const {Collection, Client, Discord} = require('discord.js')
-const fs = require('fs')
+const {Collection, Client } = require('discord.js');
+const fs = require('fs');
+
 const client = new Client({
     disableEveryone: true
 })
-const config = require('./config.json')
+
+const config = require('./config.json');
+
 const prefix = config.prefix
 const token = config.token
 client.commands = new Collection();
@@ -29,6 +32,9 @@ client.on('ready', () => {
     client.user.setActivity(`${prefix}help`)
     console.log(`${client.user.username} ✅`)
 })
+
+
+
 client.on('message', async message =>{
     if(message.author.bot) return;
     if(!message.content.startsWith(prefix)) return;
@@ -40,5 +46,12 @@ client.on('message', async message =>{
     let command = client.commands.get(cmd)
     if(!command) command = client.commands.get(client.aliases.get(cmd));
     if(command) command.run(client, message, args) 
+
+
+    
 })
+
+
+
+      
 client.login(token)
